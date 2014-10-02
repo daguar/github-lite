@@ -1,15 +1,17 @@
-<h3><%= @issue.title + "(#{@issue.number})" %></h3>
+<h2><%= @issue.title + " (##{@issue.number})" %></h2>
 <p>
   <%= @issue.body %>
 </p>
 
 <% @comments.each do |comment| %>
-<h4>
-  <%= "#{comment.user.login} commented on #{comment.created_at}" %>
-</h4>
-<p>
-  <%= comment.body %>
-</p>
+  <h6>
+    <%= "#{comment.user.login} commented on #{comment.created_at}" %>
+  </h6>
+  <div class="comment-body">
+    <p>
+      <%= comment.body %>
+    </p>
+  </div>
 <% end %>
 
 <input type="textarea">

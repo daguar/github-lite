@@ -5,10 +5,10 @@
   <% end %>
     <ul class="sectlevel1">
       <li>
-        <h3><a href="/<%= @repo_string %>">Overview</h3>
+        <h3><a href="/<%= @repo_string %>">Overview</a></h3>
       </li>
       <li>
-        <h3><a href="/<%= @repo_string %>/discussion">Discussions</a></h3>
+        <h3><a href="/<%= @repo_string %>">Discussions</a></h3>
       </li>
     </ul>
   </nav>
@@ -16,8 +16,6 @@
 
 <main id="content" class="layout-major">
 
-<h3>Overview:</h3>
-
-<%= @readme_html %>
+<%= yield %>
 
 </main>

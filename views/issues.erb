@@ -3,7 +3,7 @@
 <% @issues.each do |issue| %>
   <li>
     <a href="<%= @url + "/" + issue.number.to_s %>">
-      <%= "#{issue.title} (#{issue.number})" %>
+      <%= issue.title %>
     </a>
   </li>
 <% end %>

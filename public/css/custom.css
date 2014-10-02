@@ -1,0 +1,19 @@
+.layout-minor {
+  color: black;
+}
+
+.layout-minor ul {
+  color: black;
+}
+
+.comment-body {
+  padding-left: 18px;
+}
+
+.layout-semibreve, .layout-chimney, .layout-chimney-invert, .layout-breve {
+  padding: 0;
+}
+
+h1 {
+  margin: 0;
+}
