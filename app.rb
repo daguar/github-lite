@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'octokit'
-require 'pry'
 
 configure do
   Octokit.configure do |c|
