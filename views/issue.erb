@@ -3,6 +3,10 @@
   <%= @issue.body %>
 </p>
 
+<a href="/<%= @repo_string %>/discussion">Back</a>
+
+<br><br>
+
 <% @comments.each do |comment| %>
   <h6>
     <%= "#{comment.user.login} commented on #{comment.created_at}" %>
