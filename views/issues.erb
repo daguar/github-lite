@@ -1,0 +1,10 @@
+<h3>Discussions:</h3>
+<ul>
+<% @issues.each do |issue| %>
+  <li>
+    <a href="<%= @url + "/" + issue.number.to_s %>">
+      <%= "#{issue.title} (#{issue.number})" %>
+    </a>
+  </li>
+<% end %>
+</ul>
