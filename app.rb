@@ -26,8 +26,8 @@ end
 get '/:username/:repo_name/discussion/:issue_number/?' do
   @repo_string = "#{params[:username]}/#{params[:repo_name]}"
   issue_number = params[:issue_number]
-  @issue = Octokit.issue(@repo_string, issue_number)
-  @comments = Octokit.issue_comments(@repo_string, issue_number)
+  @issue = Octokit.issue(@repo_string, issue_number, :accept => 'application/vnd.github.html')
+  @comments = Octokit.issue_comments(@repo_string, issue_number, :accept => 'application/vnd.github.html')
   erb :issues_layout do
     erb :issue
   end

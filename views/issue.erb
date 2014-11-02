@@ -1,6 +1,7 @@
 <h2><%= @issue.title + " (##{@issue.number})" %></h2>
+<h6>Started by <a href="<%= @issue.user.html_url %>"><%= @issue.user.login %></a></h6>
 <p>
-  <%= @issue.body %>
+  <%= @issue.body_html %>
 </p>
 
 <a href="/<%= @repo_string %>/discussion">Back</a>
@@ -8,15 +9,19 @@
 <br><br>
 
 <% @comments.each do |comment| %>
+  <hr>
   <h6>
-    <%= "#{comment.user.login} commented on #{comment.created_at}" %>
+    <%= "<a href=\"#{comment.user.html_url}\">#{comment.user.login}</a> commented on #{comment.created_at}" %>
   </h6>
   <div class="comment-body">
     <p>
-      <%= comment.body %>
+      <%= comment.body_html %>
     </p>
   </div>
 <% end %>
+
+<hr>
+<br>
 
 <input type="textarea">
 <input type="submit" value="Add comment">
