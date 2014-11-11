@@ -23,5 +23,10 @@
 <hr>
 <br>
 
-<input type="textarea">
-<input type="submit" value="Add comment">
+<% if authenticated? %>
+  <%= "<form action=\"#{request.url}\" method=\"POST\">" %>
+    <input type="textarea" name="comment">
+    <input type="submit" value="Add comment">
+  </form>
+<% end %>
+
