@@ -13,28 +13,28 @@ set :github_options, {
 register Sinatra::Auth::Github
 
 # The main repository for our discussions
-main_repo = "daguar/github-lite"
 
 get '/' do
   '''
     A list of all the discussions happening in the main repo.
   '''
-  issues = Octokit.list_issues("#{main_repo}")
+  @main_repo = "daguar/github-lite"
+  @issues = Octokit.list_issues(@main_repo)
   # Show each issues labels as well.
-  for issue in issues
-    issue.labels = Octokit.labels_for_issue("#{main_repo}", "#{issue.number}")
+  for issue in @issues do
+    issue.labels = Octokit.labels_for_issue("#{@main_repo}", "#{issue.number}")
   end
   erb :index
 end
 
 get '/login' do
   authenticate!
-  erb :yes
+  redirect '/'
 end
 
 get '/logout' do
   logout!
-  redirect 'http://localhost:4567'
+  redirect '/'
 end
 
 get '/:username/:repo_name/?' do
