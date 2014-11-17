@@ -9,9 +9,9 @@
   <title>Code for America :: Forum</title>
 
   <!-- The light version of the main CFA stylesheet -->
-  <link rel="stylesheet" href="http://style.codeforamerica.org/2/style/css/main.css">
+  <link rel="stylesheet" href="http://style.codeforamerica.org/style/css/main.css">
 
-  <link rel="stylesheet" href="http://style.codeforamerica.org/2/style/css/layout.css" media="all and (min-width: 40em)">
+  <link rel="stylesheet" href="http://style.codeforamerica.org/style/css/layout.css" media="all and (min-width: 40em)">
 
   <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -21,7 +21,7 @@
   <link href="http://style.codeforamerica.org/1/style/css/prism.css" rel="stylesheet" />
 
   <!-- Link to a 32x32 favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="http://style.codeforamerica.org/1/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="http://style.codeforamerica.org/favicon.ico">
 
   <!-- (Optional) Link to a 60x60 bookmark icon for iOS -->
   <link rel="apple-touch-icon-precomposed" href="http://style.codeforamerica.org/w/style/favicons/60x60/flag-red.png"/>
@@ -31,17 +31,175 @@
 </head>
 
 <body>
+    <div class="js-container">
 
-  <main role="main">
+      <nav class="nav-global-primary">
+      </nav>
+      
+      <div id="remote-header"></div>
 
-    <div class="layout-semibreve" id="main-container">
+      <div class="global-header">  
+        <a href="/forum" class="global-header-logo">
+            <img src="http://www.codeforamerica.org/assets/logo.png" />
+        </a>
+        <p class="skip-to-nav"><a href="#global-footer">Menu</a></p>
 
-      <h1>Forum</h1>
-      <%= yield %>
+        <nav class="nav-global-secondary">
+          <ul>
 
+            <% if authenticated? %>
+              <li class="nav-tier1 nav-has-children">
+                <a href="/forum/logout" >Log Out</a>
+              </li>
+            <% end %>
+            
+            <% if not authenticated? %>
+              <li class="nav-tier1 nav-has-children">
+                <a href="/forum/login" >Log In</a>
+              </li>
+            <% end %>
+
+          </ul>
+        </nav>    
+      </div>
+
+      <main role="main">
+
+        <div class="layout-semibreve" id="main-container">
+
+          <%= yield %>
+
+        </div>
+
+      </main>
+
+      <div id="remote-footer"></div>
+
+      
+      <div class="global-footer" id="global-footer">
+        
+        <div class="layout-breve layout-tight">
+        
+          <form class="search-global" action="https://www.google.com/search" method="get">
+              <input type="search" autocomplete="off" placeholder="Search" name="q" />
+              <input name="as_sitesearch" value="www.codeforamerica.org" type="hidden" />
+          </form>
+        
+          <nav class="nav-footer" role="navigation">
+            <ul>
+              <li class="nav-tier1"><a class="nav-heading" href="/">Home</a></li>
+              <li class="nav-tier1"><a class="nav-heading" href="/about/">About</a>
+                <ul class="nav-tier2">
+                  <li><a href="/about/fellowship/">Fellowship</a></li>
+                  <li><a href="/about/brigade/">Brigade</a></li>
+                  <li><a href="/about/startups/">Civic Startups</a></li>
+                  <li><a href="/about/peernetwork/">Peer Network</a></li>
+                  <li><a href="/about/international/">International</a></li>
+                  <li><a href="/about/board/">Board</a></li>
+                  <li><a href="/about/team/">Team</a></li>
+                  <li><a href="/supporters/">Supporters</a></li>
+                  <li><a href="/press/">Press</a></li>
+                  <li><a href="/jobs/">Jobs</a></li>
+                  <li><a href="/contact/">Contact</a></li>
+                </ul>
+              </li>
+            
+              <li class="nav-tier1"><a class="nav-heading" href="/governments/">Governments</a>
+                <ul class="nav-tier2">
+                  <li><a href="/governments/atlanta/">Atlanta, GA</a></li>
+                  <li><a href="/governments/charlotte/">Charlotte, NC</a></li>
+                  <li><a href="/governments/chattanooga/">Chattanooga, TN</a></li>
+                  <li><a href="/governments/denver/">Denver, CO</a></li>
+                  <li><a href="/governments/lexington/">Lexington, KY</a></li>
+                  <li><a href="/governments/longbeach/">Long Beach, CA</a></li>
+                  <li><a href="/governments/mesa/">Mesa, AZ</a></li>
+                  <li><a href="/governments/rhodeisland/">Rhode Island</a></li>
+                  <li><a href="/governments/sanantonio/">San Antonio, TX</a></li>
+                  <li><a href="/governments/sanjuan/">San Juan, PR</a></li>
+                  <li><a href="/governments/alumni/">Alumni Partners</a></li>
+                  <li><a href="/about/peernetwork/">Peer Network</a></li>
+                  <li><a href="/governments/data-standards-faq/">Data Standards</a></li>
+                </ul>
+              </li>
+                <li class="nav-tier1"><a class="nav-heading" href="/geeks/">Citizens</a>
+                <ul class="nav-tier2">
+                  <li><a href="/geeks/our-geeks/">Our Geeks</a></li>
+                  <li><a href="https://github.com/codeforamerica">Our Code</a></li>
+                  <li><a href="/geeks/our-startups/">Our Startups</a></li>
+                  <li><a href="/events/">Events</a></li>
+                  <li><a href="/geeks/civicissues">Civic Tech Issue Finder</a></li>
+                </ul>
+              </li>
+              
+              <li class="nav-tier1"><a class="nav-heading" href="/geeks/">Companies</a>
+                <ul class="nav-tier2">
+                  <li><a href="/companies/our-companies"> Our Companies</a></li>
+                  <li><a href="/companies/newsletter">Newsletter</a></li>
+                  <li><a href="/companies/incubator-faq">Incubator FAQ</a></li>
+                  <li><a href="/companies/accelerator-faq">Accelerator FAQ</a></li>
+                  <li><a href="/companies/accelerator-apply">Apply</a></li>
+                </ul>
+              </li>
+              
+                 </li>
+                <li class="nav-tier1"><a class="nav-heading" href="/our-work/">Our Work</a>
+                <ul class="nav-tier2">
+                  <li><a href="/apps/local-service.html#nav-tabs">Local Service Apps</a></li>
+                  <li><a href="/apps/citizen-engagement.html#nav-tabs">Citizen Engagement Apps</a></li>
+                  <li><a href="/apps/free.html#nav-tabs">Free Apps</a></li>
+                  <li><a href="/apps/paid.html#nav-tabs">Paid Apps</a></li>
+                  <li><a href="/our-work/initiatives/">Initiatives</a></li>
+                  <li><a href="/our-work/data-formats/">Data Formats</a></li>
+                </ul>
+              </li>
+              <li class="nav-tier1"><a class="nav-heading" href="/support-us/">Support Us</a>
+                <ul class="nav-tier2">
+                  <li><a href="/supporters/">Supporters</a></li>
+                  <li><a href="https://secure.codeforamerica.org/page/contribute/default?source_codes=footer-donate-link/">Donate Now</a></li>
+                </ul>
+              </li>
+              <li class="nav-tier1"><a class="nav-heading">Social</a>
+                <ul class="nav-tier2">
+                  <li><a href="https://www.facebook.com/codeforamerica" class="icon-facebook">Facebook</a></li>
+                  <li><a href="https://twitter.com/codeforamerica" class="icon-twitter">Twitter</a></li>
+                  <li><a href="http://www.youtube.com/user/CodeforAmerica" class="icon-youtube">YouTube</a></li>
+                  <li><a href="https://github.com/codeforamerica" class="icon-github2">GitHub</a></li>
+                  <li><a href="http://codeforamerica.tumblr.com/" class="icon-tumblr">Tumblr</a></li>
+                  <li><a href="http://www.flickr.com/photos/codeforamerica" class="icon-flickr">Flickr</a></li>
+                  <li><a href="https://vimeo.com/codeforamerica" class="icon-vimeo2">Vimeo</a></li>
+                  <li><a href="http://www.codeforamerica.org/feed/" class="icon-feed">RSS</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="global-foot" role="contentinfo">
+        <div class="layout-tight layout-breve">
+          <div class="global-foot-content">
+            <img class="global-foot-logo" src="http://www.codeforamerica.org/assets/logo-inversed.png" />
+            <small>Code for America Labs, Inc is a non-partisan, non-political 501(c)(3) organization. EIN number 27-1067272. Content is licensed through Creative Commons.<br/>
+            Provide website feedback <a href="https://github.com/codeforamerica/codeforamerica.org/issues/new">on GitHub</a> or to <a href="mailto:info@codeforamerica.org">info@codeforamerica.org</a>.</small>
+          </div>
+        </div>
+      </div>
+
+      </main>
     </div>
-
-  </main>
+    <script src="http://www.codeforamerica.org/script/global.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20825280-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
 
 </body>
 

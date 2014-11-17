@@ -1,8 +1,9 @@
+<h2>Civic Tech Forum</h2>
 <section>
   <ul class="list-ruled">
     <% @issues.each do |issue| %>
     <li>
-        <a href=<%= "#{@main_repo}/discussion/#{issue.number}" %>><%= issue.title %></a>
+        <a href=<%= "forum/i/#{issue.number}" %>><%= issue.title %></a>
           <% issue.labels.each do |label| %>
             <span class="label" style="background-color: <%= "label.color" %>;">
             <%= label.name %>
