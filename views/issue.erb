@@ -2,7 +2,17 @@
   <h2><%= @issue.title %></h2>
   <h6>Started by <a href="<%= @issue.user.html_url %>"><%= @issue.user.login %></a></h6>
   
-  <p><%= @issue.body_html %></p>
+  <p><%= @issue.body %></p>
+
+  <% if authenticated?%>
+
+    <% if github_user.login == @issue.user.login %>
+
+      <a href=<%="#{request.url}/edit"%> class="button">Edit Issue</a>
+
+    <% end %>
+
+  <% end %>
 
   <hr />
 
@@ -12,7 +22,7 @@
   </h6>
   <div class="comment-body">
     <p>
-      <%= comment.body_html %>
+      <%= comment.body %>
     </p>
   </div>
 <% end %>
@@ -20,14 +30,16 @@
 <hr>
 <br />
 
-</section>
-
 <% if authenticated? %>
-  <%= "<form action=\"#{request.url}\" method=\"POST\">" %>
-    <input type="textarea" name="comment">
-    <input type="submit" value="Add comment">
+  <form action= <%="#{request.url}" %> method="POST">
+    <textarea name="comment"></textarea>
+    <input type="submit" value="Add comment" class="icon-bubble" />
   </form>
 <% end %>
+
+</section>
+
+
 
 <br/>
 <br/>

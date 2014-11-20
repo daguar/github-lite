@@ -1,11 +1,19 @@
 <h2>Civic Tech Forum</h2>
+<p>Discussions about civic technology. <small><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small></p>
+<nav class="nav-tags" role="navigation">
+    <ul>
+      <% @labels.each do |label| %>
+      <li><a href="#" style="background-color: <%= "##{label.color}" %>;"><%= label.name %></a></li>
+      <% end %>
+    </ul>
+</nav>
 <section>
   <ul class="list-ruled">
     <% @issues.each do |issue| %>
     <li>
         <a href=<%= "forum/i/#{issue.number}" %>><%= issue.title %></a>
           <% issue.labels.each do |label| %>
-            <span class="label" style="background-color: <%= "label.color" %>;">
+            <span class="label" style="background-color: <%= "##{label.color}" %>;">
             <%= label.name %>
             </span>
           <% end %>
