@@ -3,7 +3,7 @@
 <nav class="nav-tags" role="navigation">
     <ul>
       <% @labels.each do |label| %>
-      <li><a href="#" style="background-color: <%= "##{label.color}" %>;"><%= label.name %></a></li>
+      <li><a href="forum/l/<%= label.name %>" style="background-color: <%= "##{label.color}" %>;"><%= label.name %></a></li>
       <% end %>
     </ul>
 </nav>

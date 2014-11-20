@@ -12,6 +12,19 @@ set :github_options, {
 
 register Sinatra::Auth::Github
 
+def which_github_client()
+  # Which github client to use?
+  # Use the users github api limit if they are logged in
+  # Use ours for all the lurkers
+  if authenticated?
+    client = github_user.api
+  end
+  if not authenticated?
+    client = Octokit
+  end
+  return client
+end
+
 get '/forum/login' do
   authenticate!
   redirect '/forum'
@@ -23,40 +36,26 @@ get '/forum/logout' do
 end
 
 # The main repository for our discussions
-main_repo = "codeforamerica/health"
+main_repo = "codeforamerica/forum"
 
 get '/forum' do
   '''
     A list of all the discussions happening in the main repo.
   '''
-  if authenticated?
-    @labels = github_user.api.labels(main_repo)
-    @issues = github_user.api.list_issues(main_repo)
-    # Show each issues labels as well.
-    for issue in @issues do
-      issue.labels = github_user.api.labels_for_issue("#{main_repo}", "#{issue.number}")
-    end
-  end
-  if not authenticated?
-    @labels = Octokit.labels(main_repo)
-    @issues = Octokit.list_issues(main_repo)
-    # Show each issues labels as well.
-    for issue in @issues do
-      issue.labels = Octokit.labels_for_issue("#{main_repo}", "#{issue.number}")
-    end
+  client = which_github_client()
+  @labels = client.labels(main_repo)
+  @issues = client.list_issues(main_repo)
+  # Show each issues labels as well.
+  for issue in @issues do
+    issue.labels = client.labels_for_issue("#{main_repo}", "#{issue.number}")
   end
   erb :index
 end
 
 get '/forum/i/:issue_number/?' do
-  if authenticated?
-    @issue = github_user.api.issue("#{main_repo}", "#{params[:issue_number]}")
-    @comments = github_user.api.issue_comments("#{main_repo}", "#{params[:issue_number]}")
-  end
-  if not authenticated?
-    @issue = Octokit.issue("#{main_repo}", "#{params[:issue_number]}")
-    @comments = Octokit.issue_comments("#{main_repo}", "#{params[:issue_number]}")
-  end
+  client = which_github_client()
+  @issue = client.issue("#{main_repo}", "#{params[:issue_number]}")
+  @comments = client.issue_comments("#{main_repo}", "#{params[:issue_number]}")
   erb :issue
 end
 
@@ -67,9 +66,15 @@ post '/forum/i/:issue_number' do
 end
 
 get '/forum/i/:issue_number/edit' do
-  if authenticated?
-    @issue = github_user.api.issue("#{main_repo}", "#{params[:issue_number]}")
-    @comments = github_user.api.issue_comments("#{main_repo}", "#{params[:issue_number]}")
-  end
+  authenticate!
+  @issue = github_user.api.issue("#{main_repo}", "#{params[:issue_number]}")
+  @comments = github_user.api.issue_comments("#{main_repo}", "#{params[:issue_number]}")
   erb :issue
+end
+
+get '/forum/l/:label_name' do
+  client = which_github_client()
+  @labels = client.labels(main_repo)
+  @issues = client.list_issues("#{main_repo}", options = {:labels => "#{:label_name}"})
+  erb :index
 end
