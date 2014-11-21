@@ -13,9 +13,11 @@ set :github_options, {
 register Sinatra::Auth::Github
 
 def which_github_client()
-  # Which github client to use?
-  # Use the users github api limit if they are logged in
-  # Use ours for all the lurkers
+  ''' 
+    Which github client to use?
+    Use the users github api limit if they are logged in
+    Use ours for all the lurkers
+  '''
   if authenticated?
     client = github_user.api
   end
@@ -52,7 +54,20 @@ get '/forum' do
   erb :index
 end
 
-get '/forum/i/:issue_number/?' do
+get '/forum/i/new' do
+  authenticate!
+  @labels = github_user.api.labels(main_repo)
+  erb :new_issue
+end
+
+post '/forum/i/new' do
+  authenticate!
+  puts params[:categories]
+  github_user.api.create_issue("#{main_repo}", "#{params[:title]}", "#{params[:body]}", options = {:labels => params[:categories]})
+  redirect "/forum"
+end
+
+get '/forum/i/:issue_number' do
   client = which_github_client()
   @issue = client.issue("#{main_repo}", "#{params[:issue_number]}")
   @comments = client.issue_comments("#{main_repo}", "#{params[:issue_number]}")

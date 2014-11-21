@@ -3,20 +3,23 @@
 <nav class="nav-tags" role="navigation">
     <ul>
       <% @labels.each do |label| %>
-      <li><a href="forum/l/<%= label.name %>" style="background-color: <%= "##{label.color}" %>;"><%= label.name %></a></li>
+        <li><a href="forum/l/<%= label.name %>" style="background-color: <%= "##{label.color}" %>;"><%= label.name %></a></li>
       <% end %>
     </ul>
+    <a class="button" href="/forum/i/new">Start a new discussion</a>
 </nav>
 <section>
   <ul class="list-ruled">
     <% @issues.each do |issue| %>
     <li>
-        <a href=<%= "forum/i/#{issue.number}" %>><%= issue.title %></a>
-          <% issue.labels.each do |label| %>
-            <span class="label" style="background-color: <%= "##{label.color}" %>;">
-            <%= label.name %>
-            </span>
-          <% end %>
+        <a href=<%= "forum/i/#{issue.number}" %> style="display:inline;"><%= issue.title %></a>
+        <nav class="nav-tags" role="navigation" style="display:inline;">
+            <ul style="display:inline;">
+              <% issue.labels.each do |label| %>
+                <li><a href="forum/l/<%= label.name %>" style="background-color: <%= "##{label.color}" %>;"><%= label.name %></a></li>
+              <% end %>
+            </ul>
+        </nav>
     </li>
     <% end %>
   </ul>
