@@ -22,6 +22,10 @@ h1 {
   margin: 0;
 }
 
+hr {
+  border-top-color: #e5e5e5;
+}
+
 ul {
   display: inline;
   margin: 0;
@@ -63,6 +67,10 @@ ul {
 
 .clear {
   clear: both;
+}
+
+.inline {
+  display: inline;
 }
 
 textarea, input {

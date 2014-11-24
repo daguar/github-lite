@@ -1,6 +1,6 @@
 <section>
 
-  <h2 style="display:inline;"><%= @issue.title %></h2>
+  <h2 class="inline"><%= @issue.title %></h2>
 
   <ul class="labels right">
 
@@ -15,19 +15,20 @@
   </ul>
   <div class="clear"></div>
 
-  <h6>Started by <a href="<%= @issue.user.html_url %>"><%= @issue.user.login %></a></h6>
-  
-  <p><%= @issue.body %></p>
+  <h6 class="inline">Started by <a href="<%= @issue.user.html_url %>"><%= @issue.user.login %></a></h6>
 
   <% if authenticated?%>
 
     <% if github_user.login == @issue.user.login %>
 
-      <a href=<%="#{request.url}/edit"%> class="button">Edit Issue</a>
+      <a class="button-s inline" href=<%="#{request.url}/edit"%> >Edit Issue</a>
+      <div class="clear"></a>
 
     <% end %>
 
   <% end %>
+  
+  <p><%= @issue.body %></p>
 
   <hr />
 
