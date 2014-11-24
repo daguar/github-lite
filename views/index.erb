@@ -1,26 +1,46 @@
-<h2>Civic Tech Forum</h2>
+<h2>The Civic Technology Forum</h2>
 <p>Discussions about civic technology. <small><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small></p>
-<nav class="nav-tags" role="navigation">
-    <ul>
-      <% @labels.each do |label| %>
-        <li><a href="forum/l/<%= label.name %>" style="background-color: <%= "##{label.color}" %>;"><%= label.name %></a></li>
-      <% end %>
-    </ul>
-    <a class="button" href="/forum/i/new">Start a new discussion</a>
-</nav>
-<section>
-  <ul class="list-ruled">
-    <% @issues.each do |issue| %>
-    <li>
-        <a href=<%= "forum/i/#{issue.number}" %> style="display:inline;"><%= issue.title %></a>
-        <nav class="nav-tags" role="navigation" style="display:inline;">
-            <ul style="display:inline;">
-              <% issue.labels.each do |label| %>
-                <li><a href="forum/l/<%= label.name %>" style="background-color: <%= "##{label.color}" %>;"><%= label.name %></a></li>
-              <% end %>
-            </ul>
-        </nav>
+
+<ul class="labels">
+
+  <% @labels.each do |label| %>
+
+    <li style="background-color: <%= "##{label.color}" %>;">
+      <a href="forum/l/<%= label.name %>"><%= label.name %></a>
     </li>
+
+  <% end %>
+
+</ul>
+
+<a class="button right" href="/forum/i/new">Start a new discussion</a>
+
+<section>
+  
+  <ul class="list-ruled">
+    
+    <% @issues.each do |issue| %>
+
+    <li>
+        <a class="issue-title" href=<%= "forum/i/#{issue.number}" %>><%= issue.title %></a>
+          
+          <ul class="labels right">
+
+            <% issue.labels.each do |label| %>
+
+              <li class="left" style="background-color: <%= "##{label.color}" %>;">
+                <a href="forum/l/<%= label.name %>"><%= label.name %></a>
+              </li>
+
+            <% end %>
+
+          </ul>
+          <div class="clear"></div>
+
+    </li>
+
     <% end %>
+
   </ul>
+
 </section>

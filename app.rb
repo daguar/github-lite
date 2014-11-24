@@ -47,10 +47,6 @@ get '/forum' do
   client = which_github_client()
   @labels = client.labels(main_repo)
   @issues = client.list_issues(main_repo)
-  # Show each issues labels as well.
-  for issue in @issues do
-    issue.labels = client.labels_for_issue("#{main_repo}", "#{issue.number}")
-  end
   erb :index
 end
 
@@ -62,7 +58,6 @@ end
 
 post '/forum/i/new' do
   authenticate!
-  puts params[:categories]
   github_user.api.create_issue("#{main_repo}", "#{params[:title]}", "#{params[:body]}", options = {:labels => params[:categories]})
   redirect "/forum"
 end

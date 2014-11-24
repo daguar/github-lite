@@ -1,5 +1,20 @@
 <section>
-  <h2><%= @issue.title %></h2>
+
+  <h2 style="display:inline;"><%= @issue.title %></h2>
+
+  <ul class="labels right">
+
+    <% @issue.labels.each do |label| %>
+
+      <li class="left" style="background-color: <%= "##{label.color}" %>;">
+        <a href="forum/l/<%= label.name %>"><%= label.name %></a>
+      </li>
+
+    <% end %>
+
+  </ul>
+  <div class="clear"></div>
+
   <h6>Started by <a href="<%= @issue.user.html_url %>"><%= @issue.user.login %></a></h6>
   
   <p><%= @issue.body %></p>
