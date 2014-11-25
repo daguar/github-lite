@@ -1,9 +1,11 @@
-#global-footer {
-  margin-top : 25px;
-}
-
 section {
   min-height: 350px;
+}
+
+@media (max-width:640px) {
+  .top {
+    margin-top: 75px;
+  }
 }
 
 .layout-minor {

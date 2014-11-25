@@ -1,19 +1,27 @@
-<h2>The Civic Technology Forum</h2>
-<p>Discussions about civic technology. <small><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small></p>
+<div class="top">
+  <h2>The Civic Technology Forum</h2>
+  <p>Discussions about civic technology. <small><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small></p>
+</div>
 
-<ul class="labels">
+<div class="layout-major-invert">
+  <ul class="labels">
 
-  <% @labels.each do |label| %>
+    <% @labels.each do |label| %>
 
-    <li style="background-color: <%= "##{label.color}" %>;">
-      <a href="/forum/l/<%= label.name %>"><%= label.name %></a>
-    </li>
+      <li style="background-color: <%= "##{label.color}" %>;">
+        <a href="/forum/l/<%= label.name %>"><%= label.name %></a>
+      </li>
 
-  <% end %>
+    <% end %>
 
-</ul>
+  </ul>
+</div>
 
-<a class="button right" href="/forum/i/new">Start a new discussion</a>
+<div class="layout-minor-invert">
+  <a class="button right" href="/forum/i/new">Start a new discussion</a>
+</div>
+
+<div class="clear"></div>
 
 <hr />
 
