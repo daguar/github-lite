@@ -69,6 +69,9 @@ get '/forum/i/:issue_number' do
   @issue = client.issue("#{main_repo}", "#{params[:issue_number]}")
   @issue.body = markdown.render(@issue.body)
   @comments = client.issue_comments("#{main_repo}", "#{params[:issue_number]}")
+  @comments.each do |comment|
+    comment.body = markdown.render(comment.body)
+  end
   erb :issue
 end
 
@@ -99,6 +102,18 @@ post '/forum/i/:issue_number/close' do
   authenticate!
   github_user.api.close_issue("#{main_repo}", "#{params[:issue_number]}")
   redirect "/forum"
+end
+
+get '/forum/i/:issue_number/comment/:comment_id/edit' do
+  authenticate!
+  @comment = github_user.api.issue_comment(main_repo, params[:comment_id])
+  erb :edit_comment
+end
+
+post '/forum/i/:issue_number/comment/:comment_id/edit' do
+  authenticate!
+  @comment = github_user.api.update_comment(main_repo, params[:comment_id], params[:body])
+  redirect "/forum/i/#{params[:issue_number]}"
 end
 
 get '/forum/l/:label_name' do

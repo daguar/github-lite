@@ -43,7 +43,7 @@
 
           <% if github_user.login == @issue.user.login %>
 
-            <a class="button-s inline right icon-tools" href=<%="#{request.url}/edit/comment/#{comment.id}"%> >Edit</a>
+            <a class="button-s inline right icon-tools" href=<%="#{request.url}/comment/#{comment.id}/edit"%> >Edit</a>
             <div class="clear"></a>
 
           <% end %>
