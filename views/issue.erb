@@ -7,7 +7,7 @@
     <% @issue.labels.each do |label| %>
 
       <li class="left" style="background-color: <%= "##{label.color}" %>;">
-        <a href="forum/l/<%= label.name %>"><%= label.name %></a>
+        <a href="/forum/l/<%= label.name %>"><%= label.name %></a>
       </li>
 
     <% end %>
@@ -21,7 +21,7 @@
 
     <% if github_user.login == @issue.user.login %>
 
-      <a class="button-s inline" href=<%="#{request.url}/edit"%> >Edit Issue</a>
+      <a class="button-s inline right icon-tools" href=<%="#{request.url}/edit"%> >Edit</a>
       <div class="clear"></a>
 
     <% end %>
@@ -32,19 +32,29 @@
 
   <hr />
 
-  <% @comments.each do |comment| %>
-  <h6>
-    <%= "<a href=\"#{comment.user.html_url}\">#{comment.user.login}</a>" %>
-  </h6>
-  <div class="comment-body">
-    <p>
-      <%= comment.body %>
-    </p>
-  </div>
-<% end %>
+  <ul class="list-ruled">
 
-<hr>
-<br />
+    <% @comments.each do |comment| %>
+
+      <li>
+        
+        <h6 class="inline"><%= "<a href=\"#{comment.user.html_url}\">#{comment.user.login}</a>" %></h6>
+        <% if authenticated?%>
+
+          <% if github_user.login == @issue.user.login %>
+
+            <a class="button-s inline right icon-tools" href=<%="#{request.url}/edit/comment/#{comment.id}"%> >Edit</a>
+            <div class="clear"></a>
+
+          <% end %>
+
+        <% end %>
+        <p><%= comment.body %></p>
+
+      </li>
+    <% end %>
+
+  </ul>
 
 <% if authenticated? %>
   <form action= <%="#{request.url}" %> method="POST">

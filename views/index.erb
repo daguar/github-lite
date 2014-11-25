@@ -6,7 +6,7 @@
   <% @labels.each do |label| %>
 
     <li style="background-color: <%= "##{label.color}" %>;">
-      <a href="forum/l/<%= label.name %>"><%= label.name %></a>
+      <a href="/forum/l/<%= label.name %>"><%= label.name %></a>
     </li>
 
   <% end %>
@@ -24,14 +24,14 @@
     <% @issues.each do |issue| %>
 
     <li>
-        <a class="issue-title" href=<%= "forum/i/#{issue.number}" %>><%= issue.title %></a>
+        <a class="issue-title" href=<%= "/forum/i/#{issue.number}" %>><%= issue.title %></a>
           
           <ul class="labels right">
 
             <% issue.labels.each do |label| %>
 
               <li class="left" style="background-color: <%= "##{label.color}" %>;">
-                <a href="forum/l/<%= label.name %>"><%= label.name %></a>
+                <a href="/forum/l/<%= label.name %>"><%= label.name %></a>
               </li>
 
             <% end %>

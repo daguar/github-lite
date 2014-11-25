@@ -80,14 +80,30 @@ end
 
 get '/forum/i/:issue_number/edit' do
   authenticate!
+  @labels = github_user.api.labels(main_repo)
   @issue = github_user.api.issue("#{main_repo}", "#{params[:issue_number]}")
-  @comments = github_user.api.issue_comments("#{main_repo}", "#{params[:issue_number]}")
-  erb :issue
+  @label_names = Array.new
+  @issue.labels.each do |label|
+    @label_names.push(label.name)
+  end
+  erb :edit
+end
+
+post '/forum/i/:issue_number/edit' do
+  authenticate!
+  github_user.api.update_issue("#{main_repo}", "#{params[:issue_number]}", "#{params[:title]}", "#{params[:body]}", options = {:labels => params[:categories]})
+  redirect "/forum/i/#{params[:issue_number]}"
+end
+
+post '/forum/i/:issue_number/close' do
+  authenticate!
+  github_user.api.close_issue("#{main_repo}", "#{params[:issue_number]}")
+  redirect "/forum"
 end
 
 get '/forum/l/:label_name' do
   client = which_github_client()
   @labels = client.labels(main_repo)
-  @issues = client.list_issues("#{main_repo}", options = {:labels => "#{:label_name}"})
+  @issues = client.list_issues("#{main_repo}", options = {:labels => "#{params[:label_name]}"})
   erb :index
 end
