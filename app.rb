@@ -29,12 +29,16 @@ def which_github_client()
   return client
 end
 
-get '/forum/login' do
+get '/forum/signup' do
+  erb :signup
+end
+
+get '/forum/signin' do
   authenticate!
   redirect '/forum'
 end
 
-get '/forum/logout' do
+get '/forum/signout' do
   logout!
   redirect '/forum'
 end
