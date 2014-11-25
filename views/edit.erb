@@ -1,0 +1,76 @@
+<section>
+  <h2>Edit your Discussion</h2>
+  <% if authenticated? %>
+  <form action=<%="#{request.url}"%> method="POST">
+    
+    <fieldset>
+      <legend>Discussion Title</legend>
+      <input name="title" class="input" type="text" value="<%= @issue.title %>" />
+    </fieldset>
+    
+    <fieldset>
+      <legend>Discussion Body</legend>
+      <textarea name="body"><%= @issue.body %></textarea>
+      <small class="note">Style with <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a></small>
+    </fieldset>
+
+    <fieldset>
+      <legend>Categories</legend>
+      <ul class="labels">
+
+        <% @labels.each do |label| %>
+
+          <!-- Check the function below to see whats up here -->
+          <li id="<%=label.name%>-button"
+            onmouseover="this.style.backgroundColor='#<%=label.color%>';"
+            onmouseout="this.style.backgroundColor='#e5e5e5';"
+            onClick='select("<%=label.name%>");')
+          >
+            <a><%=label.name%></a>
+          </li>
+        <% end %>
+
+      </ul>
+    </fieldset>
+
+    <select name="categories[]" id="categories" multiple style="display:none;">
+
+      <% @labels.each do |label| %>
+        <option id="<%=label.name%>" value="<%=label.name%>">
+          <%=label.name%>
+        </option>
+      <% end %>
+
+    </select>
+    <fieldset class="inline"><input type="submit" value="Discuss"></fieldset>
+
+      <form action=<%="/forum/i/#{@issue.number}/close"%> method="POST" class="inline">
+        <fieldset class="inline right"><input type="submit" value="Close discussion" class="button-bold"></fieldset>
+      </form>
+
+  </form>
+  <% end %>
+  
+</section>
+
+<br />
+
+<script>
+function select(labelName) {
+  // We want to have buttons with custom colors instead of a
+  // dropdown multiple select.
+  // Can't do dynamic colors on css hover though, so instead
+  // we add and remove inline vanilla js to get the same effect.
+  el = document.getElementById(labelName);
+  a = document.getElementById(labelName+"-button");
+  if ( a.hasAttribute('clicked') ) {
+    el.setAttribute('selected', false);
+    a.removeAttribute('clicked');
+    a.setAttribute("onmouseout", "this.style.backgroundColor='#e5e5e5';");
+  } else {
+    el.setAttribute('selected', true);
+    a.setAttribute('clicked', true);
+    a.removeAttribute("onmouseout");
+  }
+}
+</script>
