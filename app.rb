@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'octokit'
 require 'sinatra_auth_github'
+require 'redcarpet'
 
 enable :sessions
 
@@ -11,6 +12,7 @@ set :github_options, {
 }
 
 register Sinatra::Auth::Github
+markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
 
 def which_github_client()
   ''' 
@@ -65,6 +67,7 @@ end
 get '/forum/i/:issue_number' do
   client = which_github_client()
   @issue = client.issue("#{main_repo}", "#{params[:issue_number]}")
+  @issue.body = markdown.render(@issue.body)
   @comments = client.issue_comments("#{main_repo}", "#{params[:issue_number]}")
   erb :issue
 end
