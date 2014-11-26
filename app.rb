@@ -6,13 +6,13 @@ require 'redcarpet'
 enable :sessions
 
 set :github_options, {
-  :scopes    => "repo",
+  :scopes    => "repo, user:email",
   :secret    => ENV['GITHUB_CLIENT_SECRET'],
   :client_id => ENV['GITHUB_CLIENT_ID'],
 }
 
 register Sinatra::Auth::Github
-markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {})
+markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {autolink: true})
 
 def which_github_client()
   ''' 
