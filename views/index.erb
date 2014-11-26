@@ -1,6 +1,6 @@
 <div class="top">
-  <h2>The Civic Technology Forum</h2>
-  <p>Discussions about civic technology. <small><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small></p>
+  <h2><%= @repo.name %></h2>
+  <p><%= @repo.description %></p>
 </div>
 
 <div class="layout-major-invert">
@@ -9,7 +9,7 @@
     <% @labels.each do |label| %>
 
       <li style="background-color: <%= "##{label.color}" %>;">
-        <a href="/forum/l/<%= label.name %>"><%= label.name %></a>
+        <a href="/forum/<%= @repo_string %>/l/<%= label.name %>"><%= label.name %></a>
       </li>
 
     <% end %>
@@ -18,7 +18,7 @@
 </div>
 
 <div class="layout-minor-invert">
-  <a class="button right" href="/forum/i/new">Start a new discussion</a>
+  <a class="button right" href="/forum/<%= @repo_string %>/new">Start a new discussion</a>
 </div>
 
 <div class="clear"></div>
@@ -32,14 +32,14 @@
     <% @issues.each do |issue| %>
 
     <li>
-        <a class="issue-title" href=<%= "/forum/i/#{issue.number}" %>><%= issue.title %></a>
+        <a class="issue-title" href="/forum/<%= @repo_string %>/<%= issue.number %>"> <%= issue.title %> </a>
           
           <ul class="labels right">
 
             <% issue.labels.each do |label| %>
 
               <li class="left" style="background-color: <%= "##{label.color}" %>;">
-                <a href="/forum/l/<%= label.name %>"><%= label.name %></a>
+                <a href="/forum<%= @repo_string %>/l/<%= label.name %>"><%= label.name %></a>
               </li>
 
             <% end %>

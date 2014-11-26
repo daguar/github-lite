@@ -29,66 +29,67 @@ def which_github_client()
   return client
 end
 
+get '/forum' do
+  redirect '/forum/codeforamerica/forum'
+end
+
 get '/forum/signup' do
   erb :signup
 end
 
 get '/forum/signin' do
   authenticate!
-  redirect '/forum'
+  redirect back
 end
 
 get '/forum/signout' do
   logout!
-  redirect '/forum'
+  redirect back
 end
 
-# The main repository for our discussions
-main_repo = "codeforamerica/forum"
-
-get '/forum' do
+get '/forum/:username/:repo_name' do
   '''
     A list of all the discussions happening in the main repo.
   '''
   client = which_github_client()
-  @labels = client.labels(main_repo)
-  @issues = client.list_issues(main_repo)
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  @repo = client.repository(@repo_string)
+  @labels = client.labels(@repo_string)
+  @issues = client.list_issues(@repo_string)
   erb :index
 end
 
-get '/forum/i/new' do
+get '/forum/:username/:repo_name/new' do
   authenticate!
-  @labels = github_user.api.labels(main_repo)
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  @labels = github_user.api.labels(@repo_string)
   erb :new_issue
 end
 
-post '/forum/i/new' do
+post '/forum/:username/:repo_name/new' do
   authenticate!
-  github_user.api.create_issue("#{main_repo}", "#{params[:title]}", "#{params[:body]}", options = {:labels => params[:categories]})
-  redirect "/forum"
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  github_user.api.create_issue(@repo_string, params[:title], params[:body], options = {:labels => params[:categories]})
+  redirect "/forum/#{params[:username]}/#{params[:repo_name]}"
 end
 
-get '/forum/i/:issue_number' do
+get '/forum/:username/:repo_name/:issue_number' do
   client = which_github_client()
-  @issue = client.issue("#{main_repo}", "#{params[:issue_number]}")
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  @issue = client.issue(@repo_string, params[:issue_number])
   @issue.body = markdown.render(@issue.body)
-  @comments = client.issue_comments("#{main_repo}", "#{params[:issue_number]}")
+  @comments = client.issue_comments(@repo_string, params[:issue_number])
   @comments.each do |comment|
     comment.body = markdown.render(comment.body)
   end
   erb :issue
 end
 
-post '/forum/i/:issue_number' do
+get '/forum/:username/:repo_name/:issue_number/edit' do
   authenticate!
-  github_user.api.add_comment("#{main_repo}", "#{params[:issue_number]}", "#{params[:comment]}")
-  redirect "/forum/i/#{params[:issue_number]}"
-end
-
-get '/forum/i/:issue_number/edit' do
-  authenticate!
-  @labels = github_user.api.labels(main_repo)
-  @issue = github_user.api.issue("#{main_repo}", "#{params[:issue_number]}")
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  @labels = github_user.api.labels(@repo_string)
+  @issue = github_user.api.issue(@repo_string, params[:issue_number])
   @label_names = Array.new
   @issue.labels.each do |label|
     @label_names.push(label.name)
@@ -96,33 +97,45 @@ get '/forum/i/:issue_number/edit' do
   erb :edit
 end
 
-post '/forum/i/:issue_number/edit' do
+post '/forum/:username/:repo_name/:issue_number/edit' do
   authenticate!
-  github_user.api.update_issue("#{main_repo}", "#{params[:issue_number]}", "#{params[:title]}", "#{params[:body]}", options = {:labels => params[:categories]})
-  redirect "/forum/i/#{params[:issue_number]}"
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  github_user.api.update_issue(@repo_string, params[:issue_number], params[:title], params[:body], options = {:labels => params[:categories]})
+  redirect "/forum/#{@repo_string}/#{params[:issue_number]}"
 end
 
-post '/forum/i/:issue_number/close' do
+post '/forum/:username/:repo_name/:issue_number/close' do
   authenticate!
-  github_user.api.close_issue("#{main_repo}", "#{params[:issue_number]}")
-  redirect "/forum"
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  github_user.api.close_issue(@repo_string, params[:issue_number])
+  redirect "/forum/#{@repo_string}"
 end
 
-get '/forum/i/:issue_number/comment/:comment_id/edit' do
+post '/forum/:username/:repo_name/:issue_number/comment' do
   authenticate!
-  @comment = github_user.api.issue_comment(main_repo, params[:comment_id])
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  github_user.api.add_comment(@repo_string, params[:issue_number], params[:comment])
+  redirect "/forum/#{@repo_string}/#{params[:issue_number]}"
+end
+
+get '/forum/:username/:repo_name/:issue_number/comment/:comment_id/edit' do
+  authenticate!
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  @comment = github_user.api.issue_comment(@repo_string, params[:comment_id])
   erb :edit_comment
 end
 
-post '/forum/i/:issue_number/comment/:comment_id/edit' do
+post '/forum/:username/:repo_name/:issue_number/comment/:comment_id/edit' do
   authenticate!
-  @comment = github_user.api.update_comment(main_repo, params[:comment_id], params[:body])
-  redirect "/forum/i/#{params[:issue_number]}"
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
+  @comment = github_user.api.update_comment(@repo_string, params[:comment_id], params[:body])
+  redirect "/forum/#{@repo_string}/#{params[:issue_number]}"
 end
 
-get '/forum/l/:label_name' do
+get '/forum/:username/:repo_name/l/:label_name' do
   client = which_github_client()
+  @repo_string = "#{params[:username]}/#{params[:repo_name]}"
   @labels = client.labels(main_repo)
-  @issues = client.list_issues("#{main_repo}", options = {:labels => "#{params[:label_name]}"})
+  @issues = client.list_issues(@repo_string, options = {:labels => params[:label_name]})
   erb :index
 end

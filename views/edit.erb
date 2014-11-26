@@ -42,15 +42,15 @@
       <% end %>
 
     </select>
-    <fieldset class="inline"><input type="submit" value="Discuss"></fieldset>
-
-      <form action=<%="/forum/i/#{@issue.number}/close"%> method="POST" class="inline">
-        <fieldset class="inline right"><input type="submit" value="Close discussion" class="button-bold"></fieldset>
-      </form>
+    <fieldset class="inline"><input type="submit" value="Discuss"><small class="note"><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small></fieldset>
 
   </form>
+
+  <form action=<%="/forum/#{@repo_string}/#{@issue.number}/close"%> method="POST" class="inline">
+    <fieldset class="inline right"><input type="submit" value="Close discussion" class="button-bold"></fieldset>
+  </form>
   <% end %>
-  
+
 </section>
 
 <br />

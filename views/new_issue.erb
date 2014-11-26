@@ -1,7 +1,7 @@
 <section>
   <h2>Start a new discussion</h2>
   <% if authenticated? %>
-  <form action=<%="#{request.url}"%> method="POST">
+  <form action="<%= request.url %>" method="POST">
     
     <fieldset>
       <legend>Discussion Title</legend>
@@ -21,10 +21,10 @@
           <% @labels.each do |label| %>
             <li>
               <!-- Check the function below to see whats up here -->
-              <a id="<%=label.name%>-button"
-                onmouseover="this.style.backgroundColor='#<%=label.color%>';"
+              <a id="<%= label.name %>-button"
+                onmouseover="this.style.backgroundColor='#<%= label.color %>';"
                 onmouseout="this.style.backgroundColor='rgba(109, 110, 113, 0.4)';"
-                onClick='select("<%=label.name%>");')
+                onClick='select("<%= label.name %>");')
               >
                 <%=label.name%>
               </a>
@@ -36,11 +36,11 @@
 
     <select name="categories[]" id="categories" multiple style="display:none;">
       <% @labels.each do |label| %>
-      <option id="<%=label.name%>" value="<%=label.name%>"><%=label.name%></option>
+      <option id="<%= label.name %>" value="<%= label.name %>"><%= label.name %></option>
       <% end %>
     </select>
 
-    <fieldset><input type="submit" value="Discuss"></fieldset>
+    <fieldset><input type="submit" value="Discuss"><small class="note"><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small></fieldset>
 
   </form>
   <% end %>
