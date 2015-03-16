@@ -27,6 +27,10 @@ def which_github_client()
   return client
 end
 
+get '/' do
+  erb :welcome
+end
+
 get '/forum' do
   redirect '/forum/codeforamerica/forum'
 end
