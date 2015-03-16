@@ -39,7 +39,7 @@
             <% issue.labels.each do |label| %>
 
               <li class="left" style="background-color: <%= "##{label.color}" %>;">
-                <a href="/forum<%= @repo_string %>/l/<%= label.name %>"><%= label.name %></a>
+                <a href="/forum/<%= @repo_string %>/l/<%= label.name %>"><%= label.name %></a>
               </li>
 
             <% end %>

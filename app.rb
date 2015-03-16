@@ -135,7 +135,8 @@ end
 get '/forum/:username/:repo_name/l/:label_name' do
   client = which_github_client()
   @repo_string = "#{params[:username]}/#{params[:repo_name]}"
-  @labels = client.labels(main_repo)
-  @issues = client.list_issues(@repo_string, options = {:labels => params[:label_name]})
+  @repo = client.repository(@repo_string)
+  @labels = client.labels(@repo_string)
+  @issues = client.list_issues(@repo_string, {:labels => params[:label_name]})
   erb :index
 end
