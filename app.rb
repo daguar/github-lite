@@ -15,11 +15,9 @@ register Sinatra::Auth::Github
 markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, {autolink: true})
 
 def which_github_client()
-  ''' 
-    Which github client to use?
-    Use the users github api limit if they are logged in
-    Use ours for all the lurkers
-  '''
+  # Which github client to use?
+  # Use the users github api limit if they are logged in
+  # Use ours for all the lurkers
   if authenticated?
     client = github_user.api
   end
@@ -48,9 +46,7 @@ get '/forum/signout' do
 end
 
 get '/forum/:username/:repo_name' do
-  '''
-    A list of all the discussions happening in the main repo.
-  '''
+  # A list of all the discussions happening in the main repo.
   client = which_github_client()
   @repo_string = "#{params[:username]}/#{params[:repo_name]}"
   @repo = client.repository(@repo_string)
