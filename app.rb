@@ -12,14 +12,12 @@ set :github_options, {
 }
 
 register Sinatra::Auth::Github
-markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {autolink: true})
+markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, {autolink: true})
 
 def which_github_client()
-  ''' 
-    Which github client to use?
-    Use the users github api limit if they are logged in
-    Use ours for all the lurkers
-  '''
+  # Which github client to use?
+  # Use the users github api limit if they are logged in
+  # Use ours for all the lurkers
   if authenticated?
     client = github_user.api
   end
@@ -27,6 +25,10 @@ def which_github_client()
     client = Octokit
   end
   return client
+end
+
+get '/' do
+  erb :welcome
 end
 
 get '/forum' do
@@ -48,15 +50,17 @@ get '/forum/signout' do
 end
 
 get '/forum/:username/:repo_name' do
-  '''
-    A list of all the discussions happening in the main repo.
-  '''
+  # A list of all the discussions happening in the main repo.
   client = which_github_client()
   @repo_string = "#{params[:username]}/#{params[:repo_name]}"
   @repo = client.repository(@repo_string)
   @labels = client.labels(@repo_string)
   @issues = client.list_issues(@repo_string)
   erb :index
+end
+
+get '/forum/:username/:repo_name/' do
+  redirect "/forum/#{params[:username]}/#{params[:repo_name]}"
 end
 
 get '/forum/:username/:repo_name/new' do
