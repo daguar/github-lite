@@ -59,6 +59,10 @@ get '/forum/:username/:repo_name' do
   erb :index
 end
 
+get '/forum/:username/:repo_name/' do
+  redirect "/forum/#{params[:username]}/#{params[:repo_name]}"
+end
+
 get '/forum/:username/:repo_name/new' do
   authenticate!
   @repo_string = "#{params[:username]}/#{params[:repo_name]}"
