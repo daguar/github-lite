@@ -12,7 +12,7 @@ set :github_options, {
 }
 
 register Sinatra::Auth::Github
-markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, extensions = {autolink: true})
+markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, {autolink: true})
 
 def which_github_client()
   ''' 
