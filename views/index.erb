@@ -1,0 +1,56 @@
+<div class="top">
+  <h2><%= @repo.name %></h2>
+  <p><%= @repo.description %></p>
+</div>
+
+<div class="layout-major-invert">
+  <ul class="labels">
+
+    <% @labels.each do |label| %>
+
+      <li style="background-color: <%= "##{label.color}" %>;">
+        <a href="/forum/<%= @repo_string %>/l/<%= label.name %>"><%= label.name %></a>
+      </li>
+
+    <% end %>
+
+  </ul>
+</div>
+
+<div class="layout-minor-invert">
+  <a class="button right" href="/forum/<%= @repo_string %>/new">Start a new discussion</a>
+</div>
+
+<div class="clear"></div>
+
+<hr />
+
+<section>
+  
+  <ul class="list-ruled">
+    
+    <% @issues.each do |issue| %>
+
+    <li>
+        <a class="issue-title" href="/forum/<%= @repo_string %>/<%= issue.number %>"> <%= issue.title %> </a>
+          
+          <ul class="labels right">
+
+            <% issue.labels.each do |label| %>
+
+              <li class="left" style="background-color: <%= "##{label.color}" %>;">
+                <a href="/forum/<%= @repo_string %>/l/<%= label.name %>"><%= label.name %></a>
+              </li>
+
+            <% end %>
+
+          </ul>
+          <div class="clear"></div>
+
+    </li>
+
+    <% end %>
+
+  </ul>
+
+</section>

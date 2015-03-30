@@ -1,27 +1,67 @@
-<h2><%= @issue.title + " (##{@issue.number})" %></h2>
-<h6>Started by <a href="<%= @issue.user.html_url %>"><%= @issue.user.login %></a></h6>
-<p>
-  <%= @issue.body_html %>
-</p>
+<section>
 
-<a href="/<%= @repo_string %>/discussion">Back</a>
+  <h2 class="inline"><%= @issue.title %></h2>
 
-<br><br>
+  <ul class="labels right">
 
-<% @comments.each do |comment| %>
-  <hr>
-  <h6>
-    <%= "<a href=\"#{comment.user.html_url}\">#{comment.user.login}</a> commented on #{comment.created_at}" %>
-  </h6>
-  <div class="comment-body">
-    <p>
-      <%= comment.body_html %>
-    </p>
-  </div>
+    <% @issue.labels.each do |label| %>
+
+      <li class="left" style="background-color: <%= "##{label.color}" %>;">
+        <a href="/forum/l/<%= label.name %>"><%= label.name %></a>
+      </li>
+
+    <% end %>
+
+  </ul>
+  <div class="clear"></div>
+
+  <h6 class="inline">Started by <a href="<%= @issue.user.html_url %>"><%= @issue.user.login %></a></h6>
+
+  <% if authenticated?%>
+
+    <% if github_user.login == @issue.user.login %>
+
+      <a class="button-s inline right icon-tools" href=<%="#{request.url}/edit"%> >Edit</a>
+      <div class="clear"></a>
+
+    <% end %>
+
+  <% end %>
+  
+  <p><%= @issue.body %></p>
+
+  <hr />
+
+  <ul class="list-ruled">
+
+    <% @comments.each do |comment| %>
+
+      <li>
+        
+        <h6 class="inline"><a href="<%= comment.user.html_url %>"><%= comment.user.login %></a></h6>
+        <% if authenticated? %>
+
+          <% if github_user.login == comment.user.login %>
+
+            <a class="button-s inline right icon-tools" href="<%= request.url %>/comment/<%= comment.id %>/edit">Edit</a>
+            <div class="clear"></a>
+
+          <% end %>
+
+        <% end %>
+        <p><%= comment.body %></p>
+
+      </li>
+    <% end %>
+
+  </ul>
+
+<% if authenticated? %>
+  <form action= "<%= request.url %>/comment" method="POST">
+    <textarea name="comment"></textarea>
+    <input type="submit" value="Add comment" class="icon-bubble" />
+    <small class="note"><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small>
+  </form>
 <% end %>
 
-<hr>
-<br>
-
-<input type="textarea">
-<input type="submit" value="Add comment">
+</section>

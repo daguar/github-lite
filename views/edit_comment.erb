@@ -1,0 +1,19 @@
+<section>
+  <h2>Edit your Comment</h2>
+  <% if authenticated? %>
+  <form action=<%="#{request.url}"%> method="POST">
+
+    <fieldset>
+      <legend>Comment</legend>
+      <textarea name="body"><%= @comment.body %></textarea>
+      <small class="note">Style with <a href="https://guides.github.com/features/mastering-markdown/">Markdown</a></small>
+    </fieldset>
+
+    <fieldset class="inline"><input type="submit" value="Discuss"><small class="note"><a href="https://github.com/codeforamerica/codeofconduct">Don't be a jerk</a>.</small></fieldset>
+
+  </form>
+  <% end %>
+  
+</section>
+
+<br />

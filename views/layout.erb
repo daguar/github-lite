@@ -2,32 +2,26 @@
 <html lang="en">
 <head>
 
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>GitHub Lite</title>
+  <title>Code for America :: Forum</title>
 
-    <link rel="stylesheet" type="text/css" href="//cloud.webtype.com/css/944a7551-9b08-4f0a-8767-e0f83db4a16b.css" />
+  <!-- The light version of the main CFA stylesheet -->
+  <link rel="stylesheet" href="http://style.codeforamerica.org/style/css/main.css">
 
-    <!-- The light version of the main CFA stylesheet -->
-  <link rel="stylesheet" href="http://style.codeforamerica.org/1/style/css/cfa-light.css">
-
-  <link rel="stylesheet" href="http://style.codeforamerica.org/1/style/css/layout.css" media="all and (min-width: 40em)">
+  <link rel="stylesheet" href="http://style.codeforamerica.org/style/css/layout.css" media="all and (min-width: 40em)">
 
   <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-
-  <!--[if (lt IE 9)&(gt IE 6)&(!IEMobile)]>
-  <link rel="stylesheet" href="../style/css/layout.css" media="all">
   <![endif]-->
 
   <!-- (Optional) A plugin that adds syntax highlighting to code samples -->
   <link href="http://style.codeforamerica.org/1/style/css/prism.css" rel="stylesheet" />
 
   <!-- Link to a 32x32 favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="http://style.codeforamerica.org/1/favicon.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="http://style.codeforamerica.org/favicon.ico">
 
   <!-- (Optional) Link to a 60x60 bookmark icon for iOS -->
   <link rel="apple-touch-icon-precomposed" href="http://style.codeforamerica.org/w/style/favicons/60x60/flag-red.png"/>
@@ -36,14 +30,65 @@
 
 </head>
 
-<title>GitHub Lite</title>
-
 <body>
+    <div class="js-container">
 
-  <div class="layout-semibreve" id="main-container">
-    <h1>GitHub Lite</h1>
-    <%= yield %>
-  </div> <!-- class="layout-semibreve" -->
+      <nav class="nav-global-primary">
+      </nav>
+      
+      <div id="remote-header"></div>
+
+      <div class="global-header">  
+        <a href="/forum/<%= "#{@repo_string}" %>" class="global-header-logo">
+            <img src="http://www.codeforamerica.org/assets/logo.png" />
+        </a>
+        <p class="skip-to-nav"><a href="#global-footer">Menu</a></p>
+
+        <nav class="nav-global-secondary">
+          <ul>
+
+            <% if authenticated? %>
+              <li class="nav-tier1 nav-has-children">
+                <a href="/forum/signout" >Sign Out</a>
+              </li>
+            <% end %>
+            
+            <% if not authenticated? %>
+              <li class="nav-tier1 nav-has-children">
+                <a href="/forum/signup" >Sign Up</a>
+              </li>
+              <li class="nav-tier1 nav-has-children">
+                <a href="/forum/signin" >Sign In</a>
+              </li>
+            <% end %>
+
+          </ul>
+        </nav>    
+      </div>
+
+      <main role="main">
+
+        <div class="layout-semibreve" id="main-container">
+
+          <%= yield %>
+
+        </div>
+
+      </main>
+
+    <script src="http://www.codeforamerica.org/script/global.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20825280-1']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
 
 </body>
 
